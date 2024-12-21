@@ -16,5 +16,5 @@ print("Заметки:", content)
 print("Статус заметки:", status)
 print("Дата создания заметки:", temp_created_date)
 print("Дата истечения заметки (дедлайн):", temp_issue_date)
-print()
+
 
