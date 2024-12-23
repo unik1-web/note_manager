@@ -1,3 +1,4 @@
+#Задание 4: Добавление списка заголовков
 username = input("Имя пользователя: ")
 title1 = input("Заголовок 1: ")
 title2 = input("Заголовок 2: ")
@@ -10,11 +11,9 @@ issue_date = input("Дата истечения заметки (дедлайн) 
 temp_created_date = created_date[0: 5]
 temp_issue_date = issue_date[0: 5]
 print()
-print("Имя пользователя:", username)
-print("Заголовок:", title)
-print("Заметки:", content)
-print("Статус заметки:", status)
-print("Дата создания заметки:", temp_created_date)
-print("Дата истечения заметки (дедлайн):", temp_issue_date)
-
-
+print("Имя пользователя: ", username)
+print("Заголовки: ", title)
+print("Заметки: ", content)
+print("Статус заметки: ", status)
+print("Дата создания заметки: ", temp_created_date)
+print("Дата истечения заметки (дедлайн): ", temp_issue_date)
