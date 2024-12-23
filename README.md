@@ -1,4 +1,7 @@
-#greetings.py (Задание 1)
+
+<h1 align="center">Завершение этапа 1</h1>
+<h3 align="center">greetings.py (Задание 1)</h3>
+
 Созданы базовые переменные для заметки: username, title, content, status, created_date, issue_date.
 Вывод значений организован через print.
 #date_changer.py (Задание 2)
