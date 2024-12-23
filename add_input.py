@@ -1,3 +1,4 @@
+#Задание 3: Ввод данных через input
 username = input("Имя пользователя: ")
 title = input("Заголовок: ")
 content = input("Заметка: ")
