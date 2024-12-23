@@ -6,9 +6,9 @@ note[1] = input(note[1])
 note[2] = input(note[2])
 note[3] = input(note[3])
 note[4] = input(note[4])
-note[5:1] = input(note[5:1])
-note[5:2] = input(note[5:2])
-note[5:3] = input(note[5:3])
+note[5] [1] = input(note[5][1])
+note[5][2] = input(note[5][2])
+note[5][3] = input(note[5][3])
 temp_created_date = note[3][0: 5]
 temp_issue_date = note[4][0: 5]
 print(note)
