@@ -14,8 +14,10 @@ while True:
         num_days = (issue_date - current_date).days
         if issue_date < current_date:
             print('\nВнимание! Дедлайн истёк {} дня назад.'.format(-num_days))
-        else:
+        elif issue_date > current_date:
             print('\nДо дедлайна осталось {} дня.'.format(num_days))
+        else:
+            print('\nДедлайн сегодня!')
         break
     except ValueError:
         # код для обработки исключения, которое может возникнуть в блоке try
