@@ -5,7 +5,7 @@ current_date = date.today()
 print("Текущая дата: ", current_date)                                           # Вывод в формате YYYY-MM-DD
 while True:
     try:                               # код, который может вызвать исключение (Проверка введенной даты на корректность)
-        issue_date = input("Введите дату дедлайна (в формате день-месяц-год): ")# Ввод даты пользователем
+        issue_date: str = input("Введите дату дедлайна (в формате день-месяц-год): ")# Ввод даты пользователем
         issue_date = datetime.strptime(issue_date,format("%d-%m-%Y"))           # Преобразование ввода в объект datetime
         issue_date = datetime.date(issue_date)                                  # Преобразование ввода в объект datetime
         num_days = (current_date - issue_date).days                             # Разница в днях между датами
