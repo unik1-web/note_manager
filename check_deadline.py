@@ -1,24 +1,30 @@
+# Обработка дедлайнов
 from datetime import date, datetime
-
 # Получение текущей даты
 current_date = date.today()
-print("Текущая дата: ", current_date)  # Вывод в формате YYYY-MM-DD 
+print("Текущая дата: ", current_date)                                           # Вывод в формате YYYY-MM-DD
 while True:
-    try:
-        # код, который может вызвать исключение (Проверка введенной даты на корректность)
-        # Ввод даты пользователем
-        issue_date = input("\nВведите дату дедлайна (в формате день-месяц-год): ")
-        # Правильное преобразование строки в объект datetime
-        issue_date = datetime.strptime(issue_date,format("%d-%m-%Y"))
-        issue_date = datetime.date(issue_date)
-        num_days = (issue_date - current_date).days
-        if issue_date < current_date:
-            print('\nВнимание! Дедлайн истёк {} дня назад.'.format(-num_days))
-        elif issue_date > current_date:
-            print('\nДо дедлайна осталось {} дня.'.format(num_days))
+    try:                               # код, который может вызвать исключение (Проверка введенной даты на корректность)
+        issue_date = input("Введите дату дедлайна (в формате день-месяц-год): ")# Ввод даты пользователем
+        issue_date = datetime.strptime(issue_date,format("%d-%m-%Y"))           # Преобразование ввода в объект datetime
+        issue_date = datetime.date(issue_date)                                  # Преобразование ввода в объект datetime
+        num_days = (current_date - issue_date).days                             # Разница в днях между датами
+        if issue_date < current_date:                                           # Условие вывода предупреждения при
+            if num_days in [1,21,31,41,51,61,71,81,91,101,121,131,141,151,161,171,181,191]: # положительной разницы дней
+                print('Внимание! Дедлайн истёк {} день назад.'.format(num_days))            # между датами
+            elif num_days in [2,3,4,22,23,24,32,33,34,42,43,44,52,53,54,62,63,64,72,73,74,82,83,84,92,93,94,102,103,104,122,123,124]:
+                print('Внимание! Дедлайн истёк {} дня назад.'.format(num_days))
+            else:
+                print('Внимание! Дедлайн истёк {} дней назад.'.format(num_days))
+        elif issue_date > current_date:                                         # Условия вывода предупреждения при
+            if -num_days in [1,21,31,41,51,61,71,81,91,101,121,131,141,151,161,171,181,191]:# отрицательной разницы дней
+                print('До дедлайна остался {} день.'.format(-num_days))                     # между датами
+            elif -num_days in [2,3,4,22,23,24,32,33,34,42,43,44,52,53,54,62,63,64,72,73,74,82,83,84,92,93,94,102,103,104,122,123,124]:
+                print('До дедлайна осталось {} дня.'.format(-num_days))
+            else:
+                print('До дедлайна осталось {} дней.'.format(-num_days))
         else:
-            print('\nДедлайн сегодня!')
-        break
-    except ValueError:
-        # код для обработки исключения, которое может возникнуть в блоке try
+            print('Дедлайн сегодня!')
+        break                                                               # Выход из цикла while
+    except:                                                                 # Любая ошибка при вводе даты пользователем
         print("Неверный формат даты. Пожалуйста, введите дату в формате день-месяц-год.")
