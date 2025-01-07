@@ -92,15 +92,18 @@ def vvod():
             e += 1
             note.clear()                        # Очистка списка ввода данных
 
+def  vivod(note_id):                            # Вывод заметки
+    for i in range(len(ID)):                        # Вывод списка заметок с форматом табулирования строк
+        print(i+1,". ", end='')                     # Вывод номера заметки
+        for j in range(6):                          # Вывод данных заметки
+            if j in [0]:
+                print("\t",note_end[j], note_id[ID[i]][j])
+            else:
+                print("\t\t",note_end[j], note_id[ID[i]][j])
+
 # Программа "Менеджер заметок"
 print('Добро пожаловать в "Менеджер заметок"! Вы можете добавить новую заметку.')
 print("Вводите строки с заглавной буквы, а даты в любом числовом формате (10-10-2024 и т.п.):")
 vvod()
 print("Список заметок:")
-for i in range(len(ID)):                        # Вывод списка заметок с форматом табулирования строк
-    print(i+1,". ", end='')                     # Вывод номера заметки
-    for j in range(6):                          # Вывод данных заметки
-        if j in [0]:
-            print("\t",note_end[j], note_states[ID[i]][j])
-        else:
-            print("\t\t",note_end[j], note_states[ID[i]][j])
+vivod(note_states)
