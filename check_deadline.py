@@ -6,7 +6,6 @@ from datetime import date, datetime
 def today():                           # Получение текущей даты
     return date.today()
 
-
 def delta(issue):                      # Разница в днях между датами
     return (today() - issue).days
 
@@ -26,7 +25,7 @@ def day_(num_, fraza1_, fraza2_):      #Вывод предупреждения 
         print('{} {} дней {}.'.format(fraza1_, num_, fraza2_))
 
 def replace_dates(match_): # Обработка любого ввода даты
-    a = 0
+    a = []
     b = 0
     c = ['\\d{2}/\\d{2}/\\d{2,4}', '\\d{2}-\\d{2}-\\d{2,4}', '\\d{2}:\\d{2}:\\d{2,4}', '\\d{2}.\\d{2}.\\d{2,4}',
          '\\d{2,4}/\\d{2}/\\d{2}', '\\d{2,4}-\\d{2}-\\d{2}', '\\d{2,4}:\\d{2}:\\d{2}', '\\d{2,4}.\\d{2}.\\d{2}']
@@ -34,6 +33,7 @@ def replace_dates(match_): # Обработка любого ввода даты
     for i,j in zip(c,d):
         try:
             a = re.findall(i, match_)
+            print(a[0])
             b = datetime.strptime(a[0], j)
             return b
         except:

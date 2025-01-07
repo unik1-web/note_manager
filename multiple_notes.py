@@ -1,9 +1,10 @@
 # Задание: Работа с несколькими заметками
-from datetime import date
+import re
+from datetime import datetime
 
-note_ = (
-"имя пользователя: ", "заголовок заметки: ", "описание заметки: ", "статус заметки (новая, в процессе, выполнено):",
-"дату создания заметки ", "дату истечения заметки (дедлайн) ")
+note_ = ("имя пользователя: ", "заголовок заметки: ", "описание заметки: ",
+         "статус заметки (новая, в процессе, выполнено): ",
+         "дату создания заметки: ", "дату истечения заметки (дедлайн): ")
 status_ = ("новая", "в процессе", "выполнено")
 fraza = {0: "Вы ввели текст без заглавной буквы, поэтому повторите ввод!",
          2: "Вы ввели несколько заголовков, поэтому повторите ввод заголовка заметки!",
@@ -12,69 +13,66 @@ fraza = {0: "Вы ввели текст без заглавной буквы, п
 note = []
 note_states = {}
 
-
-def replace_dates(match_):  # Обработка любого ввода даты
-    a = 0
+def replace_dates(match_):      # Обработка любого ввода даты
+    a = []
     b = 0
     c = ['\\d{2}/\\d{2}/\\d{2,4}', '\\d{2}-\\d{2}-\\d{2,4}', '\\d{2}:\\d{2}:\\d{2,4}', '\\d{2}.\\d{2}.\\d{2,4}',
          '\\d{2,4}/\\d{2}/\\d{2}', '\\d{2,4}-\\d{2}-\\d{2}', '\\d{2,4}:\\d{2}:\\d{2}', '\\d{2,4}.\\d{2}.\\d{2}']
     d = ['%d/%m/%Y', '%d-%m-%Y', '%d:%m:%Y', '%d.%m.%Y', '%Y/%m/%d', '%Y-%m-%d', '%Y:%m:%d', '%Y.%m.%d']
-    for i, j in zip(c, d):
+    for i, j in zip(c, d):                  # Проверка ввода на наличие в строке даты
         try:
-            a = re.findall(i, match_)
-            b = datetime.strptime(a[0], j)
-            return b
+            a = re.findall(i, match_)       # Поиск в строке ввода даты по имеющимся в списке [c] шаблонам
+            b = datetime.strptime(a[0], j)  # Преобразование вырезанной строки в тип datetime
+            b = datetime.date(b)            # Преобразование datetime в date
+            return b                        # Выход из функции с аргументом date
         except:
             continue
-
+    print(fraza[4])
+    return 0                                # Выход из функции с аргументом 0, т.е. нужен повторный ввод даты
 
 def proverka(stroka_, ind_):
-    counter = 0  # Счетчик заглавных букв
-    if ind_ in [0, 1, 2]:
+    counter = 0                                         # Счетчик заглавных букв
+    if ind_ == 3 and stroka_ not in status_:            # Проверка на вхождение ввода в список статусов заметки
+        print(fraza[3])
+        return 0                            # Выход из функции с аргументом 0, т.е. нужен повторный ввод статуса
+    elif ind_ in [0, 1, 2]:
         for ch in stroka_:
-            if ch.isupper(): counter += 1  # Проверка на заглавную букву
-            if counter in [0] and ind_ in [0, 1, 2]:  # 0 заглавные буквы
+            if ch.isupper(): counter += 1               # Проверка на заглавную букву
+            if counter in [0] and ind_ in [0, 1, 2]:    # 0 заглавных букв
                 print(fraza[counter])
                 note.pop(-1)
-                return 0
-    elif ind_ == 3 and stroka_ not in status_:
-        print(fraza[3])
-        return 0
-    elif ind_ in [4, 5]:
-        print(fraza[4])
-        return 1
-    # <class 'datetime.date'>
-
+                return 0                    # Выход из функции с аргументом 0, т.е. нужен повторный ввод
 
 def vvod():
-    c = -1
-    lst = []
-    while True:  # Ввод данных пользователем в элемент списка
+    c = -1                              # Индекс заметок пользователя
+    lst = []                            # Копия списка ввода
+    while True:                         # Ввод данных пользователем
         c += 1
-        j = 0
-        while True:  # Проверка на ввод данных в список
-            # print(j,len(note))
-            if j == 6: break
-            note.append(input("Введите " + note_[j]))
-            p = proverka(note[j], j)
-            print(p)
-            if p == 0:  # Проверка на ввод данных в список
-                continue
-            elif p == 1:
-                note[j] = replace_dates(note[j])
-                print("1", note[j])
-                continue
+        j = 0                           # Индекс заполнения списка для словаря заметок
+        while True:
+            if j == 6: break            # Выход при заполнении списка словаря заметок
+            if j in [0,1,2]:            # Ввод данных пользователем
+                note.append(input("Введите с Заглавной буквы " + note_[j]))
             else:
-                j += 1
+                note.append(input("Введите " + note_[j]))
+            if j in [4, 5]:             # Проверка на ввод даты и преобразование в тип datetime
+                note[j] = replace_dates(note[j])
+                if note[j] == 0:        # Данные не прошли проверку
+                    note.pop(-1)        # Удаление из списка неправильно введенной строки
+                    continue
+            else:
+                p = proverka(note[j], j)# Проверка на ввод данных пользователем
+                if p == 0:              # Данные не прошли проверку
+                    note.pop(-1)        # Удаление из списка неправильно введенной строки
+                    continue
+            j += 1
         lst = note.copy()
-        note_states[id(c)] = lst  # dict.fromkeys(objects, id(c)) #.update(id(c):)
-        # print(note)
-        # print(note_states)
+        note_states[id(c)] = lst        # Внесение данных в словарь с ключем ID
         if input("Хотите добавить ещё одну заметку? (да/нет):  ") not in ["да", "Y", "y"]:
-            break
+            break                       # Проверка на ввод еще одной зщаметки
         else:
             c += 1
-            note.clear()
+            note.clear()                # Очистка списка ввода данных
 
 
 vvod()
@@ -95,4 +93,3 @@ print(note_states)
 # note_dict["titles"][2] = input("Введите "+ note0[5]+"3: ")
 # # temp_created_date = note_dict["created_date"][: 5]
 # # temp_issue_date = note_dict["issue_date"][: 5]
-
