@@ -5,32 +5,32 @@ note_states = {1:["Алексей", "Список покупок", "Купить
 note_end = ("Имя: ", "Заголовок: ", "Описание: ","Статус: ","Дата создания: ", "Дедлайн: ")
 
 def delete_note(del_):
-    k, l, m = 0, 0, 0
+    m = 0                                      # Счетчик удаленных заметок
     for k in range(len(note_states.keys())):
         for l in range(3):
-            if del_ == note_states[k + 1][l]:  # Проверка на необходимость удаления введенной заметки
+            if del_.lower() == note_states[k + 1][l].lower():  # Проверка по критерию
                 del note_states[k + 1]         # Удаление заметки с искомым критерием
-                m += 1                         # Счетчик удаленных заметок
+                m += 1
                 break
     if m == 0:
         print("Заметок с таким именем пользователя или заголовка не найдено.")
     else:
         print("Успешно удалено. Остались следующие заметки:")
-        vivod(note_states)                     # Вывод оставшихся заметок
+        vivod()                                 # Вывод оставшихся заметок
     return
 
-def  vivod(note_id):
-    i , j = 0, 0
-    for i in note_id.keys():                   # Вывод заметок
-        print(i , ". ", end='')                # Вывод номера заметки
-        for j in range(3):                     # Вывод данных заметки с форматом табулирования строк
+def  vivod():
+    for i in note_states.keys():                # Вывод заметок
+        print(i , ". ", end='')                 # Вывод номера заметки
+        for j in range(3):                      # Вывод данных заметки с форматом табулирования строк
             if j in [0]:
-                print("\t", note_end[j], note_id[i][j])
+                print("\t", note_end[j], note_states[i][j])
             else:
-                print("\t\t", note_end[j], note_id[i][j])
+                print("\t\t", note_end[j], note_states[i][j])
 
 # Программа
-print("Текущие заметки:")
-vivod(note_states)
+print("Вот текущий список ваших заметок:")
+vivod()
 del_kriteriy = input("Введите имя пользователя или заголовок для удаления заметки: ")
-delete_note(del_kriteriy)
+if input("Вы уверены, что хотите удалить заметку? (да/нет) ") in ["да", "Да","Y", "y", "Yes","yes"]:
+    delete_note(del_kriteriy)
