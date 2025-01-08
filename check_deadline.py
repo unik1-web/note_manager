@@ -1,6 +1,10 @@
+# Этап2_Финальное_Юнин_Константин.
 # Обработка дедлайнов
+
 import re
 from datetime import date, datetime
+
+fraza_ = ()
 
 # Функции
 def today():                           # Получение текущей даты
