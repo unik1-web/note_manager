@@ -72,7 +72,7 @@ def create_note():
         note.append(stroka_) 
         ind_ += 1
     for i, j in zip(note_keys,range(6)):
-        note_states[i] = note[j]
+        note_states[i] = note[j]        # Внесение данных в словарь
     print("Заметка создана:", note_states)
 
 # Программа "Менеджер заметок"
