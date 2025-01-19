@@ -17,9 +17,9 @@ note_states = [
 note_end = ("Имя пользователя: ", "Заголовок: ", "Описание: ",
             "Статус: ", "Дата создания: ", "Дедлайн: "
             )   # Список элементов заметки для вывода
-spisok_slov = []    # Список ключевых слов для поиска по нескольким словам
+list_of_words = []    # Список ключевых слов для поиска по нескольким словам
 search_ = []    # Список найденных по ключевым словам заметок
-m = -1  # Индекс ключевого слова в списке search_ = []
+index_ = -1  # Индекс ключевого слова в списке search_ = []
 data_ = 1
 
 
@@ -51,22 +51,22 @@ def search_notes(notes, keyword=None, status=None):
                             dikt_.append(sub)   # Добавление заметки с критерием в словарь
                             break
                     break
-    if len(dikt_) == 0 and spisok_slov == []:  # Проверка на наличие заметок, соответствующих критериям
+    if len(dikt_) == 0 and list_of_words == []:  # Проверка на наличие заметок, соответствующих критериям
         print("\033[32m" + "\nЗаметки, соответствующие запросу, не найдены.")
         return dikt_
     else:
-        vivod_(dikt_)
+        output_(dikt_)
         return dikt_
 
-def proverka(stroka_):  # Проверка вводимых данных
-    if stroka_ not in ["1", "2"]:  # Ввод отличается от 1 или 2
+def proverka(string_):  # Проверка вводимых данных
+    if string_ not in ["1", "2"]:  # Ввод отличается от 1 или 2
         print("Пожалуйста повторите ввод правильно: либо 1, либо 2!")
         return 0
     else:
-        return int(stroka_)  # Возврат целого числа
+        return int(string_)  # Возврат целого числа
 
 
-def vivod_(notes):  # Вывод заметок в виде столбца
+def output_(notes):  # Вывод заметок в виде столбца
     if data_ == 1:
         for l, _dict_ in enumerate(notes):
             print('\033[32m' + 'Найдены заметки:')  # Изменение цвета текста на зелёный
@@ -77,60 +77,60 @@ def vivod_(notes):  # Вывод заметок в виде столбца
                       f'{_dict_[res]}')
 
 
-def vvod(stroka_):
+def data_entry(string_):
     while True:
-        if stroka_ in ["Введите ключевое слово: ","Нажмите Enter для продолжения" ]:
-            vvod_ = input('\033[39m' + '\n' +
-                  stroka_)  # Изменение цвета текста на стандартный
-            return vvod_
+        if string_ in ["Введите ключевое слово: ", "Нажмите Enter для продолжения"]:
+            data_ = input('\033[39m' + '\n' +
+                          string_)  # Изменение цвета текста на стандартный
+            return data_
         else:
-            vvod_ = input(stroka_)
-            vvod_ = proverka(vvod_)
-            if vvod_ == 0:  # Проверка вводимых данных на ошибку
+            data_ = input(string_)
+            data_ = proverka(data_)
+            if data_ == 0:  # Проверка вводимых данных на ошибку
                 continue
             else:
-                return vvod_  # Возврат целого числа
+                return data_  # Возврат целого числа
 
 
 # Программа
 print("\nВвод данных, которые не соответствуют ни одной заметке.\n"
       "Ввод: search_notes(notes, keyword='Hello')")
 search_ = search_notes(note_states, keyword='Hello')
-vvod("Нажмите Enter для продолжения")
+data_entry("Нажмите Enter для продолжения")
 print("\nОбработка пустого списка заметок.\n")
 search_ = search_notes({}, keyword='работы', status='выполнено')
-vvod("Нажмите Enter для продолжения")
+data_entry("Нажмите Enter для продолжения")
 print("\nПоиск по ключевому слову. "
       "Ввод: search_notes(notes, keyword='покупок')\n")
 search_ = search_notes(note_states, keyword='покупок')
-vvod("Нажмите Enter для продолжения")
+data_entry("Нажмите Enter для продолжения")
 print("\nПоиск по статусу. "
       "Ввод: search_notes(notes, status='в процессе')\n")
 search_ = search_notes(note_states, status='в процессе')
-vvod("Нажмите Enter для продолжения")
+data_entry("Нажмите Enter для продолжения")
 print("\nПоиск по ключевому слову и статусу. "
       "Ввод: search_notes(notes, keyword='работы', status='выполнено')\n")
 search_ = search_notes(note_states, keyword='работы', status='выполнено')
-vvod("Нажмите Enter для продолжения")
+data_entry("Нажмите Enter для продолжения")
 print("\nПоиск по ключевому слову с нечувствительностью к регистру. "
       "Ввод: search_notes(notes, keyword='ПОКУПОК')\n")
 search_ = search_notes(note_states, keyword='покупок')
-vvod("Нажмите Enter для продолжения")
+data_entry("Нажмите Enter для продолжения")
 print("\nРеализация поиска по нескольким ключевым словам. "
       "Ввод: search_notes(notes, keyword='ПОКУПОК','работы')")
 search_ = []
 notes = note_states
 data_ = 0
 while True:
-    if vvod("\nХотите ввести ключевое слово для поиска? 1Да/2Нет ") == 1:
-        spisok_slov.append(vvod("Введите ключевое слово: "))
+    if data_entry("\nХотите ввести ключевое слово для поиска? 1Да/2Нет ") == 1:
+        list_of_words.append(data_entry("Введите ключевое слово: "))
         continue
     else:
         print("\nБудет произведен поиск по введенным вами ключевым словам, принадлежащим одной заметке!")
-        vvod("Нажмите Enter для продолжения")
+        data_entry("Нажмите Enter для продолжения")
         break
-for m, ind_ in enumerate(spisok_slov):
+for index_, ind_ in enumerate(list_of_words):
     search_ = search_notes(notes, keyword=ind_)
     notes = search_ if len(search_) != 0 else notes
 data_ = 1
-vivod_(notes)
+output_(notes)

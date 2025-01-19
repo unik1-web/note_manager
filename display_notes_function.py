@@ -123,8 +123,8 @@ def output_(notes):         # Вывод заметок в виде столбц
 
 
 def output_tab(notes):          # Вывод заметок в виде таблицы
-    print('Список заметок:')
-    print('\033[32m' + tabulate(notes, headers='keys'))
+    print('\033[32m' + 'Список заметок:\n')
+    print(tabulate(notes, headers='keys'))
     print('\033[39m')
     return
 
