@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from tabulate import tabulate
+
 note_states = [
     {'username': 'Алексей', 'title': 'Список покупок',
     'content': 'Купить продукты на неделю', 'status': 'новая',
@@ -68,14 +69,14 @@ def display_notes(notes):
     output_(notes)          # Вывод заметок построчно
 
 
-def data_entry(stroka_):
+def data_entry(string_):
     while True:
-        if stroka_ == phrase[4]:
+        if string_ == phrase[4]:
             input('\033[39m' +
-                  stroka_)          # Изменение цвета текста на стандартный
+                  string_)          # Изменение цвета текста на стандартный
             return
         else:
-            date_ = input(stroka_)
+            date_ = input(string_)
             date_ = check_(date_)
             if date_ == 0:          # Проверка вводимых данных на ошибку
                 continue
@@ -83,12 +84,12 @@ def data_entry(stroka_):
                 return date_        # Возврат целого числа
 
 
-def check_(stroka_):        # Проверка вводимых данных
-    if stroka_ not in ["1", "2"]:       # Ввод отличается от 1 или 2
+def check_(string_):        # Проверка вводимых данных
+    if string_ not in ["1", "2"]:       # Ввод отличается от 1 или 2
         print("Пожалуйста повторите ввод правильно: 1, либо 2!")
         return 0
     else:
-        return int(stroka_)         # Возврат целого числа
+        return int(string_)         # Возврат целого числа
 
 
 def sorting_(notes):
@@ -102,7 +103,6 @@ def sorting_(notes):
 def output_(notes):         # Вывод заметок в виде столбца
     print('\033[32m' + 'Список заметок:')       # Изменение цвета текста на зелёный
     print("---------------")
-    k = 0
     for l, _dict_ in enumerate(notes):
         if data_ == 2:
             if (l % 5) == 0 and l != 0:
