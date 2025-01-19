@@ -3,17 +3,37 @@
 
 from datetime import datetime
 from tabulate import tabulate
-
 note_states = [
     {'username': 'Алексей', 'title': 'Список покупок',
     'content': 'Купить продукты на неделю', 'status': 'новая',
-    'created_date': '21-11-2024', 'issue_date': '30-11-2024'},
+    'created_date': '25-11-2024', 'issue_date': '30-11-2024'},
     {'username': 'Мария', 'title': 'План учёбы и работы',
      'content': 'Подготовиться к экзамену', 'status': 'в процессе',
-     'created_date': '01-12-2024', 'issue_date': '11-12-2024'},
+     'created_date': '03-12-2024', 'issue_date': '11-12-2024'},
     {'username': 'Иван', 'title': 'План работы',
      'content': 'План работы', 'status': 'выполнено',
-     'created_date': '22-11-2024', 'issue_date': '26-11-2024'}
+     'created_date': '19-11-2024', 'issue_date': '26-11-2024'},
+    {'username': 'Андрей', 'title': 'Список покупок',
+    'content': 'Купить продукты на неделю', 'status': 'новая',
+    'created_date': '24-11-2024', 'issue_date': '30-11-2024'},
+    {'username': 'Анна', 'title': 'План учёбы и работы',
+     'content': 'Подготовиться к экзамену', 'status': 'в процессе',
+     'created_date': '02-12-2024', 'issue_date': '11-12-2024'},
+    {'username': 'Ираида', 'title': 'План работы',
+     'content': 'План работы', 'status': 'выполнено',
+     'created_date': '23-11-2024', 'issue_date': '26-11-2024'},
+    {'username': 'Акакий', 'title': 'Список покупок',
+    'content': 'Купить продукты на неделю', 'status': 'новая',
+    'created_date': '20-11-2024', 'issue_date': '30-11-2024'},
+    {'username': 'Артур', 'title': 'План учёбы и работы',
+     'content': 'Подготовиться к экзамену', 'status': 'в процессе',
+     'created_date': '01-12-2024', 'issue_date': '11-12-2024'},
+    {'username': 'Эльза', 'title': 'План работы',
+     'content': 'План работы', 'status': 'выполнено',
+     'created_date': '22-11-2024', 'issue_date': '26-11-2024'},
+    {'username': 'Гомер', 'title': 'Список покупок',
+    'content': 'Купить продукты на неделю', 'status': 'новая',
+    'created_date': '21-11-2024', 'issue_date': '30-11-2024'}
 ]       # Список словарей заметки
 phrase = {
     0: "Какой вывод заметок предпочитаете? (1Заголовки/2Полные данные) ",
