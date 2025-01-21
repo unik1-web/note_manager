@@ -1,5 +1,5 @@
 # Этап3_Финальное_Юнин_Константин.
-# Функция обновления заметки
+# Функция отображения заметок
 
 from datetime import datetime
 from tabulate import tabulate
