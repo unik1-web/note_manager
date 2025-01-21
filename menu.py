@@ -1,3 +1,8 @@
+# Этап3_Финальное_Юнин_Константин.
+# Собрать и организовать результаты всех задач этапа 3 в одном проекте,
+# чтобы продемонстрировать навыки работы с функциями, улучшить структурированность кода и
+# упростить взаимодействие пользователя с системой управления заметками.
+
 import re
 from datetime import date, datetime, timedelta
 from tabulate import tabulate
@@ -54,10 +59,11 @@ note_keys = [
     "status", "created_date", "issue_date"
 ]  # Кортеж ключей словаря заметки
 notes = []  # Список словарей заметки
-note = {}   # Словарь заметки
+note = {}  # Словарь заметки
+found_notes = None
 
 
-def create_note():
+def create_note():  # Функция ввода данных заметки
     notes_ = []  # Список заметки
     note_states = {}  # Словарь заметки
     ind_ = 0  # Индекс заполнения списка для словаря заметок
@@ -68,16 +74,142 @@ def create_note():
     for i, j in zip(note_keys, range(6)):
         note_states[i] = notes_[j]  # Внесение данных в словарь
     print("\033[32m" + "Новая заметка создана!")
-    dicts = note_states.copy()  # Копия словаря заметки, для возможности очистки текущего словаря
-    # notes_.append(dicts)
-    # note_states.clear()
-    return dicts
+    return note_states
 
 
-def data_entry(string_, ind_=7):
+def display_notes(notes_l): # Функция вывода данных заметки
+    def sorting_(notes_):
+        if data_entry(phrase[7]) == 1:  # Сортировка словаря по дате создания или дедлайну
+            notes_.sort(key=lambda x: datetime.strptime(x['created_date'], '%d-%m-%Y'))
+        else:
+            notes_.sort(key=lambda x: datetime.strptime(x['issue_date'], '%d-%m-%Y'))
+        return notes_  # Возврат отсортированного списка словарей
+
+    def output_(list_, date_=2):  # Вывод заметок в виде столбца
+        print('\033[32m' + 'Список заметок:')  # Изменение цвета текста на зелёный
+        print("---------------")
+        for l, _dict_ in enumerate(list_):
+            if date_ == 2:
+                if (l % 5) == 0 and l != 0:
+                    data_entry(phrase[8])
+                print('\033[32m' + 'Заметка №', (l + 1), ':')  # Вывод номера заметки
+                for i, res in enumerate(_dict_.keys()):
+                    print(
+                        f'{note_end[i]}'
+                        f'{_dict_[res]}'
+                    )  # Вывод заметок по образцу
+            else:
+                print('\033[32m' + 'Заметка №', (l + 1), ':')  # Вывод номера заметки
+                print(
+                    f'{note_end[1]}'  # Вывод заголовков построчно
+                    f'{list_[l][note_keys[1]]}'
+                )
+            print("---------------------")
+
+    def output_tab(list__):  # Вывод заметок в виде таблицы
+        list_ = list__.copy()    # копия списка для вывода
+        for i, mydict in enumerate(list_):
+            pos = list(mydict.keys()).index('username')
+            items = list(mydict.items())
+            items.insert(
+                pos, ('№', i+1)
+            )  # Вставка в каждый словарь ключа "№" для нумерации заметок в таблице
+            list_[i] = dict(items)
+        print('\033[32m' + 'Список заметок:\n')
+        print(tabulate(list_, headers='keys'))
+        print('\033[39m')
+        return
+
+    dates_ = data_entry('\033[39m' + phrase[4], 6)  # Выбор: заголовки или полные данные?
+    if data_entry(phrase[5], 6) == 1:
+        notes_l = sorting_(notes_l)  # Сортировка списка словарей по дате создания или дедлайну
+    if dates_ == 2:
+        if data_entry(phrase[6], 6) == 2:
+            output_tab(notes_l)  # Вывод заметок в виде таблицы
+            return
+    output_(notes_l, dates_)  # Вывод заметок построчно
+
+
+def update_note(note_states):   # Функция обновления данных заметки
+    while True:
+        data_entr = data_entry(phrase[9], 8)
+        if data_entr in note_keys:
+            dat_ = data_entry((phrase[10] + data_entr + ": "), note_keys.index(data_entr))
+            if data_entry(phrase[11], 6) in [1]:  # Проверка на необходимость изменения словаря
+                note_states[data_entr] = dat_  # Изменение словаря заметки по ключу
+                print("Заметка обновлена: ")
+                return note_states
+            return
+        else:
+            print(phrase[13])
+            continue
+
+
+def delete_note():  # Функция удаления заметки
+    m = 0  # Счетчик удаленных заметок
+    l = 0  # Индекс проверяемого списка заметок
+    len_ = len(notes)
+    del_ = data_entry(
+        "Введите имя пользователя или заголовок для удаления заметки: ", 1
+    )  # Ввод критерия для удаления заметки
+    if data_entry(
+            "Вы уверены, что хотите удалить заметку? (1да/2нет) ", 6
+    ) == 2:
+        return
+    while (l + m) <= len_:
+        _dict_ = notes[l]
+        for k in range(2):
+            if (
+                    del_.lower() == _dict_[note_keys[k]].lower()
+            ):  # Проверка по критерию с любым регистром ввода
+                notes.remove(_dict_)  # Удаление заметки с искомым критерием
+                m += 1
+                len_ -= 1
+                l -= 1
+                break
+        l += 1
+    if m == 0:
+        print('\033[32m' + "Заметок с таким именем пользователя или заголовка не найдено.")
+    else:
+        print('\033[32m' + "Успешно удалено.")  # Вывод оставшихся заметок
+    return
+
+
+def search_notes(notes, keyword, status_):  # Функция поиска заметки
+    dikt_ = []
+    if keyword is None:  # Поиск по статусу
+        for sub in notes:
+            for val in sub.values():
+                if status_ in val:
+                    dikt_.append(sub)  # Добавление заметки с критерием в словарь
+                    break
+    elif status_ is None:  # Поиск по ключевому слову
+        for sub in notes:
+            for val in sub.values():
+                if keyword in val.split():
+                    dikt_.append(sub)  # Добавление заметки с критерием в словарь
+                    break
+    else:
+        for sub in notes:  # Поиск по статусу и ключевому слову
+            for val in sub.values():
+                if keyword in val.split():
+                    for vals in sub.values():
+                        if status_ in vals:
+                            dikt_.append(sub)  # Добавление заметки с критерием в словарь
+                            break
+                    break
+    if len(dikt_) == 0:  # Проверка на наличие заметок, соответствующих критериям
+        print("\033[32m" + "Заметки, соответствующие запросу, не найдены.")
+        return
+    else:
+        print('\033[32m' + 'Найдены заметки:')
+        return dikt_
+
+
+def data_entry(string_, ind_=7):    # Функция проверки ввода данных заметки
     def check_(str_, ind_):  # Проверка вводимых данных
         counter = 0  # Счетчик заглавных букв
-        if str_ == "" and ind_ not in [3, 4, 5]:
+        if str_ == "" and ind_ not in [3, 4, 5, 8]:
             print(phrase[13])
             return 0
         if ind_ in [5]:
@@ -114,13 +246,11 @@ def data_entry(string_, ind_=7):
             else:
                 return int(str_)
         elif ind_ == 7:
-            if not str_.isdigit():
+            if not str_.isdigit():  # Проверка ввода данных на наличие цифр
                 return 0
         return str_
 
     def replace_dates(match_):  # Обработка любого ввода даты
-        a = []  # Список вхождений даты в строке
-        b = 0  # Временная переменная преобразования даты
         for i, j in zip(c, d):  # Проверка ввода на наличие в строке даты
             try:
                 a = re.findall(i, match_)  # Поиск в строке ввода даты по имеющимся в списке [c] шаблонам
@@ -155,175 +285,16 @@ def data_entry(string_, ind_=7):
                 return dates  # Возврат целого числа
 
 
-def display_notes(notes_l):
-    def sorting_(notes_):
-        if data_entry(phrase[7]) == 1:  # Сортировка словаря по дате создания или дедлайну
-            notes_.sort(key=lambda x: datetime.strptime(x['created_date'], '%d-%m-%Y'))
-        else:
-            notes_.sort(key=lambda x: datetime.strptime(x['issue_date'], '%d-%m-%Y'))
-        return notes_  # Возврат отсортированного списка словарей
-
-    def output_(list_, date_=2):  # Вывод заметок в виде столбца
-        print('\033[32m' + 'Список заметок:')  # Изменение цвета текста на зелёный
-        print("---------------")
-        for l, _dict_ in enumerate(list_):
-            if date_ == 2:
-                if (l % 5) == 0 and l != 0:
-                    data_entry(phrase[8])
-                print('\033[32m' + 'Заметка №', (l + 1), ':')  # Вывод номера заметки
-                for i, res in enumerate(_dict_.keys()):
-                    print(
-                        f'{note_end[i]}'
-                        f'{_dict_[res]}'
-                    )  # Вывод заметок по образцу
-            else:
-                print('\033[32m' + 'Заметка №', (l + 1), ':')  # Вывод номера заметки
-                print(
-                    f'{note_end[1]}'  # Вывод заголовков построчно
-                    f'{list_[l][note_keys[1]]}'
-                )
-            print("---------------------")
-
-    def output_tab(list_):  # Вывод заметок в виде таблицы
-        print('\033[32m' + 'Список заметок:\n')
-        print(tabulate(list_, headers='keys'))
-        print('\033[39m')
-        return
-
-    dates_ = data_entry('\033[39m' + phrase[4], 6)  # Выбор: заголовки или полные данные?
-    if data_entry(phrase[5], 6) == 1:
-        notes_l = sorting_(notes_l)  # Сортировка списка словарей по дате создания или дедлайну
-    if dates_ == 2:
-        if data_entry(phrase[6], 6) == 2:
-            output_tab(notes_l)  # Вывод заметок в виде таблицы
-            return
-    output_(notes_l, dates_)  # Вывод заметок построчно
-
-
-def update_note():
-    # num_ = data_entry("Введите номер обновляемой заметки: ")
-    # note_states = notes[int(num_) - 1]
-    while True:
-        data_entr = data_entry(phrase[9], 8)
-        if data_entr in note_keys:
-            dat_ = data_entry((phrase[10] + data_entr + ": "), note_keys.index(data_entr))
-            if data_entry(phrase[11], 6) in [1]:  # Проверка на необходимость изменения словаря
-                note_states[data_entr] = dat_  # Изменение словаря заметки по ключу
-                print("Заметка обновлена: ")
-            else:
-                print("Заметка не обновлена!")
-            return
-        else:
-            print(phrase[13])
-            continue
-
-
-def delete_note():
-    m = 0  # Счетчик удаленных заметок
-    l = 0  # Индекс проверяемого списка заметок
-    len_ = len(notes)
-    del_ = data_entry(
-        "Введите имя пользователя или заголовок для удаления заметки: ", 1
-    )  # Ввод критерия для удаления заметки
-    if data_entry(
-            "Вы уверены, что хотите удалить заметку? (1да/2нет) ", 6
-    ) == 2:
-        return
-    while (l + m) <= len_:
-        _dict_ = notes[l]
-        for k in range(2):
-            if (
-                    del_.lower() == _dict_[note_keys[k]].lower()
-            ):  # Проверка по критерию с любым регистром ввода
-                notes.remove(_dict_)  # Удаление заметки с искомым критерием
-                m += 1
-                len_ -= 1
-                l -= 1
-                break
-        l += 1
-    if m == 0:
-        print('\033[32m' + "Заметок с таким именем пользователя или заголовка не найдено.")
-    else:
-        print('\033[32m' + "Успешно удалено.")  # Вывод оставшихся заметок
-    return
-
-
-def search_notes():
-    list_of_words = []  # Список ключевых слов для поиска по нескольким словам
-    searches = []  # Список найденных по ключевым словам заметок
-    status = None  # Статус для поиска заметки
-
-    def search_(keyword=None, stat_=None):
-        dikt_ = []  # Список найденных по ключевым словам заметок
-        keyword = keyword.lower() if keyword is not None else keyword  # Проверка по критерию с любым регистром ввода
-        stat_ = stat_.lower() if stat_ is not None else stat_  # Проверка по критерию с любым регистром ввода
-        if len(notes) == 0:  # Проверка на наличие заметок
-            print("\033[32m" + "У вас нет сохранённых заметок.")
-            return
-        if keyword is None:  # Поиск по статусу
-            for sub in notes:
-                for val in sub.values():
-                    if stat_ in val:
-                        dikt_.append(sub)  # Добавление заметки с критерием в словарь
-                        break
-        elif stat_ is None:  # Поиск по ключевому слову
-            for sub in notes:
-                for val in sub.values():
-                    if word_ in val.split():
-                        dikt_.append(sub)  # Добавление заметки с критерием в словарь
-                        break
-        else:
-            for sub in notes:  # Поиск по статусу и ключевому слову
-                for val in sub.values():
-                    if word_ in val.split():
-                        for vals in sub.values():
-                            if stat_ in vals:
-                                dikt_.append(sub)  # Добавление заметки с критерием в словарь
-                                break
-                        break
-        if len(dikt_) == 0:  # Проверка на наличие заметок, соответствующих критериям
-            print("\033[32m" + "Заметки, соответствующие запросу, не найдены.")
-            return
-        else:
-            print('\033[32m' + 'Найдены заметки:')
-            return dikt_
-
-    while True:
-        ind_word = data_entry("Хотите ввести ключевое слово для поиска? 1Да/2Нет ", 6)
-        if ind_word == 1:
-            list_of_words.append(data_entry("Введите ключевое слово: ", 0))
-            continue
-        ind_status = data_entry("Хотите ввести статус заметки для поиска? 1Да/2Нет ", 6)
-        if ind_status == 1:
-            status = data_entry("Введите статус заметки для поиска (по умолчанию - новая): ", 3)
-        break
-    if ind_status == 2 and list_of_words == []:
-        return  # Выход из функции при отсутствии ключевых слов и статуса для поиска
-    if len(list_of_words) == 0:
-        if ind_status == 1:
-            searches = search_(stat_=status)  # Поиск по статусу
-            if searches is not None: display_notes(searches)  # Вывод найденных заметок при их наличии
-            return
-        else:
-            return
-    else:
-        for word_ in list_of_words:  # Поиск по списку слов с формированием списка найденных заметок
-            searches = search_(keyword=word_, stat_=status)
-    search_list = searches if searches is not None else None
-    if search_list is not None:
-        display_notes(search_list)  # Вывод найденных заметок при их наличии
-    return
-
-
 # Programm
 while True:
-    print("""\033[32m" + "Меню действий:
-    1. Создать новую заметку
-    2. Показать все заметки
-    3. Обновить заметку
-    4. Удалить заметку
-    5. Найти заметки
-    6. Выйти из программы""")
+    print("\033[32m", end="")
+    print("""Меню действий:
+1. Создать новую заметку
+2. Показать все заметки
+3. Обновить заметку
+4. Удалить заметку
+5. Найти заметки
+6. Выйти из программы""")
     choice = input("\033[39m" + "Ваш выбор: ")
     if choice.isdigit():
         choice = int(choice)
@@ -339,24 +310,27 @@ while True:
         note = create_note()
         notes.append(note)
     elif len(notes) == 0 and choice in [2, 3, 4, 5]:
-        print("У вас нет сохранённых заметок.")
+        print("Список заметок пуст.")
         continue
     elif choice in [2]:
         display_notes(notes)
     elif choice in [3]:
         display_notes(notes)
-        
-        update_note()
+        index = int(data_entry("\033[39m"+"Введите номер заметки для обновления: "))-1
+        if 0 <= index < len(notes):
+            notes[index] = update_note(notes[index])
+        else:
+            print("Неверный номер заметки.")
     elif choice in [4]:
         delete_note()
     elif choice in [5]:
-        search_notes()
+        keyword = data_entry("\033[39m"+"Введите ключевое слово для поиска: ",8)
+        status = data_entry("\033[39m"+"Введите статус для поиска (или оставьте пустым): ",8)
+        found_notes = search_notes(notes, keyword, status)
+        if found_notes is not None: display_notes(found_notes)
     else:
         print(
-            "\033[32m" + "Неверный выбор. Пожалуйста, выберите действие из списка."
+            "\033[39m" + "Неверный выбор. Пожалуйста, выберите действие из списка."
         )
         continue
         break
-    else:
-        print("\033[32m" + "Неверный выбор. Пожалуйста, выберите действие из списка.")
-        continue
