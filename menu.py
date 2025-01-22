@@ -296,7 +296,6 @@ def save_notes_to_file(notes_, filename):
     try:
         with open(filename, "w", encoding='UTF-8') as file:
             yaml.dump(copy_notes, file, allow_unicode=True, sort_keys=False)
-        file.close()
     except PermissionError:
         print(f"Ошибка прав доступа файла {filename}. Проверьте его аттрибуты.")
         return
@@ -326,8 +325,29 @@ def load_notes_from_file(filename):
         copy_notes.append(dik_)
         values_.clear()
     print('\033[32m' + "Заметки из файла прочитаны")
-    file.close()
     return copy_notes
+
+
+def append_notes_to_file(notes, filename):
+    values_ = []
+    copy_notes = []
+    for dikt_ in notes:
+        for values in dikt_.values():
+            values_.append(values)
+        d = dict(zip(note_end, values_))
+        copy_notes.append(d)
+        values_.clear()
+    try:
+        with open(filename, "a", encoding='UTF-8') as file:
+            yaml.dump(copy_notes, file, allow_unicode=True, sort_keys=False)
+    except PermissionError:
+        print(f"Ошибка прав доступа файла {filename}. Проверьте его аттрибуты.")
+        return
+    else:
+        print(f'Файл {filename} не найден. Создан новый файл.')
+        open(filename, "w", encoding='UTF-8')
+        return
+    print('\033[32m' + "Заметки записаны в файл")
 
 
 # Programm
