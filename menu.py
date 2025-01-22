@@ -1,7 +1,9 @@
-# Этап4_Финальное_Юнин_Константин.
+# Этап3_Финальное_Юнин_Константин.
+# Собрать и организовать результаты всех задач этапа 3 в одном проекте,
+# чтобы продемонстрировать навыки работы с функциями, улучшить структурированность кода и
+# упростить взаимодействие пользователя с системой управления заметками.
 
-
-import re, yaml
+import re
 from datetime import date, datetime, timedelta
 from tabulate import tabulate
 
@@ -48,9 +50,9 @@ d = [
     '%Y:%m:%d', '%Y.%m.%d'
 ]  # Список форматов вывода даты
 note_end = (
-    "Имя пользователя", "Заголовок",
-    "Описание", "Статус",
-    "Дата создания", "Дедлайн"
+    "Имя пользователя: ", "Заголовок: ",
+    "Описание: ", "Статус: ",
+    "Дата создания: ", "Дедлайн: "
 )  # Кортеж элементов заметки для вывода
 note_keys = [
     "username", "title", "content",
@@ -59,7 +61,6 @@ note_keys = [
 notes = []  # Список словарей заметки
 note = {}  # Словарь заметки
 found_notes = None
-# yaml_file = 'geeksforgeeks.yml'
 
 
 def create_note():  # Функция ввода данных заметки
@@ -94,13 +95,13 @@ def display_notes(notes_l): # Функция вывода данных заме�
                 print('\033[32m' + 'Заметка №', (l + 1), ':')  # Вывод номера заметки
                 for i, res in enumerate(_dict_.keys()):
                     print(
-                        f'{note_end[i]}: '
+                        f'{note_end[i]}'
                         f'{_dict_[res]}'
                     )  # Вывод заметок по образцу
             else:
                 print('\033[32m' + 'Заметка №', (l + 1), ':')  # Вывод номера заметки
                 print(
-                    f'{note_end[1]}: '  # Вывод заголовков построчно
+                    f'{note_end[1]}'  # Вывод заголовков построчно
                     f'{list_[l][note_keys[1]]}'
                 )
             print("---------------------")
@@ -284,72 +285,6 @@ def data_entry(string_, ind_=7):    # Функция проверки ввода
                 return dates  # Возврат целого числа
 
 
-def save_notes_to_file(notes_, filename):
-    values_ = []
-    copy_notes = []
-    for dikt_ in notes:
-        for values in dikt_.values():
-            values_.append(values)
-        d = dict(zip(note_end, values_))
-        copy_notes.append(d)
-        values_.clear()
-    try:
-        with open(filename, "w", encoding='UTF-8') as file:
-            yaml.dump(copy_notes, file, allow_unicode=True, sort_keys=False)
-    except PermissionError:
-        print(f"Ошибка прав доступа файла {filename}. Проверьте его аттрибуты.")
-        return
-    print('\033[32m' + "Заметки записаны в файл")
-
-
-def load_notes_from_file(filename):
-    values_ = []
-    copy_notes = []
-    try:
-        with open(filename, 'r', encoding='UTF-8') as file:
-            loaded_data = yaml.safe_load(file)
-    except:
-        print(f'Файл {filename} не найден. Создан новый файл.')
-        open(filename, "w", encoding='UTF-8')
-        return
-    if loaded_data == None:
-        print("Файл заметок пуст.")
-        return
-    for dikt_ in loaded_data:
-        for values in dikt_.values():
-            values_.append(values)
-        if len(values_) != len(note_keys):
-            print(f"Ошибка при чтении файла {filename}. Проверьте его содержимое.")
-            return copy_notes
-        dik_ = dict(zip(note_keys, values_))
-        copy_notes.append(dik_)
-        values_.clear()
-    print('\033[32m' + "Заметки из файла прочитаны")
-    return copy_notes
-
-
-def append_notes_to_file(notes, filename):
-    values_ = []
-    copy_notes = []
-    for dikt_ in notes:
-        for values in dikt_.values():
-            values_.append(values)
-        d = dict(zip(note_end, values_))
-        copy_notes.append(d)
-        values_.clear()
-    try:
-        with open(filename, "a", encoding='UTF-8') as file:
-            yaml.dump(copy_notes, file, allow_unicode=True, sort_keys=False)
-    except PermissionError:
-        print(f"Ошибка прав доступа файла {filename}. Проверьте его аттрибуты.")
-        return
-    else:
-        print(f'Файл {filename} не найден. Создан новый файл.')
-        open(filename, "w", encoding='UTF-8')
-        return
-    print('\033[32m' + "Заметки записаны в файл")
-
-
 # Programm
 while True:
     print("\033[32m", end="")
@@ -359,25 +294,22 @@ while True:
 3. Обновить заметку
 4. Удалить заметку
 5. Найти заметки
-6. Запись в файл
-7. Чтение из файла
-8. Выйти из программы""")
+6. Выйти из программы""")
     choice = input("\033[39m" + "Ваш выбор: ")
     if choice.isdigit():
         choice = int(choice)
     else:
         continue
-    if choice in [8]:
+    if choice in [6]:
         print(
             "\033[32m" + "Программа завершена. Спасибо за использование!"
         )
         print("\033[39m")
         break
     elif choice in [1]:
-        if notes == None: notes = []
         note = create_note()
         notes.append(note)
-    elif notes == None and choice in [2, 3, 4, 5, 6]:
+    elif len(notes) == 0 and choice in [2, 3, 4, 5]:
         print("Список заметок пуст.")
         continue
     elif choice in [2]:
@@ -396,10 +328,6 @@ while True:
         status = data_entry("\033[39m"+"Введите статус для поиска (или оставьте пустым): ",8)
         found_notes = search_notes(notes, keyword, status)
         if found_notes is not None: display_notes(found_notes)
-    elif choice in [6]:
-        save_notes_to_file(notes, 'geeksforgeeks.yml')
-    elif choice in [7]:
-        notes = load_notes_from_file('geeksforgeeks.yml')
     else:
         print(
             "\033[39m" + "Неверный выбор. Пожалуйста, выберите действие из списка."
