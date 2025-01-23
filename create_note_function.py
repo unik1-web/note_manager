@@ -4,6 +4,8 @@
 import re
 from datetime import date, datetime, timedelta
 
+notes = {} # Словарь заметки
+
 def create_note():
     note_ = ("имя пользователя: ",
              "заголовок заметки: ",
@@ -17,14 +19,14 @@ def create_note():
               5: "Дата дедлайна не может быть раньше даты создания заметки, повторите ввод!"}        # Словарь фраз для вывода
     note_keys = ("username", "title", "content",
                    "status", "created_date", "issue_date")  # Список ключей словаря заметки
-    note_states = {}    # Словарь заметки
-    c = ['\\d{2}/\\d{2}/\\d{2,4}', '\\d{2}-\\d{2}-\\d{2,4}',
+    pattern_date = ['\\d{2}/\\d{2}/\\d{2,4}', '\\d{2}-\\d{2}-\\d{2,4}',
          '\\d{2}:\\d{2}:\\d{2,4}', '\\d{2}.\\d{2}.\\d{2,4}',
          '\\d{2,4}/\\d{2}/\\d{2}', '\\d{2,4}-\\d{2}-\\d{2}',
          '\\d{2,4}:\\d{2}:\\d{2}', '\\d{2,4}.\\d{2}.\\d{2}']  # Список шаблонов даты
-    d = ['%d/%m/%Y', '%d-%m-%Y', '%d:%m:%Y',
+    date_output_format = ['%d/%m/%Y', '%d-%m-%Y', '%d:%m:%Y',
          '%d.%m.%Y', '%Y/%m/%d', '%Y-%m-%d',
           '%Y:%m:%d', '%Y.%m.%d']  # Список форматов вывода даты
+    note_states = {} # Словарь заметки
     note = []  # Список данных текущей заметки
     ind_ = 0  # Индекс заполнения списка для словаря заметок
     while ind_ < 5:  # Ввод данных пользователем
@@ -32,24 +34,24 @@ def create_note():
         if ind_ in [4]:        # Проверка даты дедлайна
             if string_ == "":       # Пустой ввод даты создания заметки сдвигает дидлайн на неделю
                 string_ = str(date.today() + timedelta(weeks=1))
-            a = [] # Список вхождений даты в строке
-            b = 0  # Временная переменная преобразования даты
-            for i, j in zip(c, d):  # Проверка ввода на наличие в строке даты
+            list_string = [] # Список вхождений даты в строке
+            dates = 0  # Временная переменная преобразования даты
+            for i, j in zip(pattern_date, date_output_format):  # Проверка ввода на наличие в строке даты
                 try:
-                    a = re.findall(i, string_)  # Поиск в строке ввода даты по имеющимся в списке [c] шаблонам
-                    b = datetime.strptime(a[0], j)  # Преобразование вырезанной строки в тип datetime
-                    b = datetime.date(b)  # Преобразование datetime в date
-                    break   # Выход из цикла с аргументом b = date
+                    list_string = re.findall(i, string_)  # Поиск в строке ввода даты по имеющимся в списке [c] шаблонам
+                    dates = datetime.strptime(list_string[0], j)  # Преобразование вырезанной строки в тип datetime
+                    dates = datetime.date(dates)  # Преобразование datetime в date
+                    break   # Выход из цикла с аргументом dates = date
                 except:
                     continue    # Повторный ввод данных
-            if b == 0:
+            if dates == 0:
                 print(phrase[4])  # Вывод предупреждения об ошибке при неправильном вводе даты
                 continue    # Повторный ввод данных
-            if (b - date.today()).days <= 0:  # Дата создания меньше или равна даты дедлайна
+            if (dates - date.today()).days <= 0:  # Дата создания меньше или равна даты дедлайна
                 print(phrase[5])
                 continue    # Повторный ввод данных
             note.append(str(date.today().strftime("%d.%m.%Y"))) # Присвоение словарю текущей даты в формате день.месяц.год
-            note.append(str(b.strftime("%d.%m.%Y")))            # Присвоение словарю текущей даты в формате день.месяц.год
+            note.append(str(dates.strftime("%d.%m.%Y")))            # Присвоение словарю текущей даты в формате день.месяц.год
             break   # Выход из цикла
         elif ind_ in [3]:
             if string_ == "":   # Пустой ввод создания статуса заметки "новая"
@@ -76,7 +78,9 @@ def create_note():
         ind_ += 1
     for i, j in zip(note_keys,range(6)):
         note_states[i] = note[j]        # Внесение данных в словарь
-    print("Заметка создана:", note_states)
+    return note_states
 
 # Программа "Менеджер заметок"
-create_note()
+notes = create_note()
+print("Заметка создана:", notes)
+

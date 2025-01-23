@@ -122,9 +122,17 @@ def output_(notes):         # Вывод заметок в виде столбц
         print("---------------------")
 
 
-def output_tab(notes):          # Вывод заметок в виде таблицы
+def output_tab(list__):     # Вывод заметок в виде таблицы
+    list_ = list__.copy()    # копия списка для вывода
+    for i, mydict in enumerate(list_):
+        pos = list(mydict.keys()).index('username')
+        items = list(mydict.items())
+        items.insert(
+            pos, ('№', i+1)
+        )  # Вставка в каждый словарь ключа "№" для нумерации заметок в таблице
+        list_[i] = dict(items)
     print('\033[32m' + 'Список заметок:\n')
-    print(tabulate(notes, headers='keys'))
+    print(tabulate(list_, headers='keys'))
     print('\033[39m')
     return
 
