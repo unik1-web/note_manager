@@ -2,17 +2,7 @@
 
 import yaml
 
-notes = [
-    {'username': 'Алексей', 'title': 'Список покупок',
-    'content': 'Купить продукты на неделю', 'status': 'новая',
-    'created_date': '27-11-2024', 'issue_date': '30-11-2024'},
-    {'username': 'Мария', 'title': 'План учёбы и работы',
-     'content': 'Подготовиться к экзамену', 'status': 'в процессе',
-     'created_date': '25-11-2024', 'issue_date': '01-12-2024'},
-    {'username': 'Иван', 'title': 'План работы',
-     'content': 'План работы', 'status': 'выполнено',
-     'created_date': '20-11-2024', 'issue_date': '26-11-2024'}
-]   # Список словарей заметки
+notes = []   # Список словарей заметки
 note_end = (
     "Имя пользователя", "Заголовок", "Описание",
     "Статус", "Дата создания", "Дедлайн"
@@ -37,4 +27,5 @@ def save_notes_to_file(notes_, filename):
     print('\033[32m' + "Заметки записаны в файл")
 
 
-save_notes_to_file(notes, 'notes.txt')
+if __name__ == '__main__':
+    save_notes_to_file(notes, 'notes.txt')

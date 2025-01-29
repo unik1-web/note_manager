@@ -1,0 +1,1 @@
+from .note_manager.data import save_notes, load_notes

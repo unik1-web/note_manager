@@ -41,5 +41,7 @@ def load_notes_from_file(filename):
     print('\033[32m' + "Заметки из файла прочитаны")
     return copy_notes
 
-notes = load_notes_from_file('notes.txt')
-print(notes)
+
+if __name__ == '__main__':
+    notes = load_notes_from_file('notes.txt')
+    print(notes)
