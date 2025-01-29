@@ -1,4 +1,4 @@
-
+from utils.data_entry_function import *
 
 
 def create_note():  # Функция ввода данных заметки
@@ -13,3 +13,5 @@ def create_note():  # Функция ввода данных заметки
         note_states[key] = notes_[j]  # Внесение данных в словарь
     print("\033[32m" + "Новая заметка создана!")
     return note_states
+
+pass

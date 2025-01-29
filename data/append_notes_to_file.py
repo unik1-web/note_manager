@@ -1,15 +1,8 @@
-# Этап4_Сохранение_Заметок_Юнин_Константин
-
+from interface.data_string_notes import *
 import yaml
 
-notes = []   # Список словарей заметки
-note_end = (
-    "Имя пользователя", "Заголовок", "Описание",
-    "Статус", "Дата создания", "Дедлайн"
-)   # Список элементов заметки для вывода
 
-
-def append_notes_to_file(notes_, filename):
+def append_notes(notes_, filename):
     values_ = []  # Значения словаря заметок
     copy_notes = []  # Измененная копия списка словарей заметок
     for dikt_ in notes_:
@@ -26,5 +19,5 @@ def append_notes_to_file(notes_, filename):
         return
     print('\033[32m' + "Заметки записаны в файл")
 
-if __name__ == '__main__':
-    append_notes_to_file(notes, 'data.txt')
+
+pass

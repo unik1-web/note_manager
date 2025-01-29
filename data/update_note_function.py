@@ -1,4 +1,4 @@
-
+from utils.data_entry_function import *
 
 def update_note(note_states):   # Функция обновления данных заметки
     while True:
@@ -13,3 +13,5 @@ def update_note(note_states):   # Функция обновления данны
         else:
             print(phrase[13])
             continue
+
+pass

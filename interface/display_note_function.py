@@ -1,4 +1,6 @@
-
+from utils.data_entry_function import *
+from interface.data_string_notes import *
+from tabulate import tabulate
 
 def display_notes(note_list): # Функция вывода данных заметки
     def sorting_(notes_):
@@ -51,3 +53,5 @@ def display_notes(note_list): # Функция вывода данных зам�
             output_tab(note_list)  # Вывод заметок в виде таблицы
             return
     output_(note_list, dates_)  # Вывод заметок построчно
+
+    pass

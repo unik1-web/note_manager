@@ -1,4 +1,6 @@
-
+import re
+from interface.data_string_notes import *
+from datetime import date, datetime, timedelta
 
 def data_entry(string_, ind_=7):    # Функция проверки ввода данных заметки
     def check_(str_, ind_):  # Проверка вводимых данных
@@ -78,3 +80,4 @@ def data_entry(string_, ind_=7):    # Функция проверки ввода
             else:
                 return dates  # Возврат целого числа
 
+pass

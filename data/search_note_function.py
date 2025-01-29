@@ -1,5 +1,3 @@
-
-
 def search_notes(notes, keyword, status_):  # Функция поиска заметки
     dikt_ = []
     if keyword is None:  # Поиск по статусу

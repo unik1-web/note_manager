@@ -1,19 +1,8 @@
-# Этап4_Загрузка_Заметок_Юнин_Константин
-
+from interface.data_string_notes import *
 import yaml
 
-notes = []   # Список словарей заметки
-note_end = (
-    "Имя пользователя", "Заголовок", "Описание",
-    "Статус", "Дата создания", "Дедлайн"
-)   # Список элементов заметки для вывода
-note_keys = [
-    "username", "title", "content",
-    "status", "created_date", "issue_date"
-]  # Кортеж ключей словаря заметки
 
-
-def load_notes_from_file(filename):
+def load_notes(filename):
     values_ = []  # Значения словаря заметок
     copy_notes = []  # Измененная копия списка словарей заметок
     loaded_data = ''  # Список строк из файла
@@ -42,6 +31,4 @@ def load_notes_from_file(filename):
     return copy_notes
 
 
-if __name__ == '__main__':
-    notes = load_notes_from_file('notes.txt')
-    print(notes)
+pass

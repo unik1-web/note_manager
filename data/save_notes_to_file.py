@@ -1,15 +1,8 @@
-# Этап4_Сохранение_Заметок_Юнин_Константин
-
 import yaml
-
-notes = []   # Список словарей заметки
-note_end = (
-    "Имя пользователя", "Заголовок", "Описание",
-    "Статус", "Дата создания", "Дедлайн"
-)   # Список элементов заметки для вывода
+from interface.data_string_notes import *
 
 
-def save_notes_to_file(notes_, filename):
+def save_notes_file(notes_, filename):
     values_ = [] # Значения словаря заметок
     copy_notes = []  # Измененная копия списка словарей заметок
     for dikt_ in notes_:
@@ -24,8 +17,6 @@ def save_notes_to_file(notes_, filename):
     except PermissionError:
         print(f"Ошибка прав доступа файла {filename}. Проверьте имя файла или его аттрибуты.")
         return
-    print('\033[32m' + "Заметки записаны в файл")
+    print('\033[32m' + "Заметки записаны в файл !")
 
-
-if __name__ == '__main__':
-    save_notes_to_file(notes, 'notes.txt')
+pass
