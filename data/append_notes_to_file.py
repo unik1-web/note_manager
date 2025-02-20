@@ -15,7 +15,10 @@ def append_notes(notes_, filename):
         with open(filename, "a", encoding='UTF-8') as file:
             yaml.dump(copy_notes, file, allow_unicode=True, sort_keys=False)
     except PermissionError:
-        print(f"Ошибка прав доступа файла {filename}. Проверьте имя файла или его аттрибуты.")
+        print(
+            f"Ошибка прав доступа файла {filename}. "
+            f"Проверьте имя файла или его аттрибуты."
+        )
         return
     print('\033[32m' + "Заметки записаны в файл")
 
