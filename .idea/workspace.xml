@@ -4,22 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca87a242-b4e3-4218-9f63-b5f8a45ae285" name="Changes" comment="Создание папок&#10;Создание новых функций">
-      <change afterPath="$PROJECT_DIR$/interface/data_string_notes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/append_notes_to_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/append_notes_to_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/create_note_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/create_note_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data_entry_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/data_entry_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/delete_note_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/delete_note_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/display_note_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/display_note_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/load_notes_from_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/load_notes_from_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/save_notes_json.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/save_notes_json.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/save_notes_to_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/save_notes_to_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/search_note_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/search_note_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/update_note_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/update_note_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interface/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+    <list default="true" id="ca87a242-b4e3-4218-9f63-b5f8a45ae285" name="Changes" comment="Создание папок&#10;Создание новых функций&#10;Создание пакетов">
+      <change afterPath="$PROJECT_DIR$/1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +48,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.1.executor": "Run",
     "Python.append_notes_to_file.executor": "Run",
     "Python.main.executor": "Run",
     "Python.menu.executor": "Run",
@@ -83,6 +71,28 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration name="1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="note_manager1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="note_manager" />
       <option name="ENV_FILES" value="" />
@@ -151,6 +161,11 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.1" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -174,6 +189,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Создание папок" />
     <MESSAGE value="Создание папок&#10;Создание новых функций" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создание папок&#10;Создание новых функций" />
+    <MESSAGE value="Создание папок&#10;Создание новых функций&#10;Создание пакетов" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создание папок&#10;Создание новых функций&#10;Создание пакетов" />
   </component>
 </project>
